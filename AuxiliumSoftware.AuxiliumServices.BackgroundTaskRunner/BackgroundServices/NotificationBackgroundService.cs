@@ -175,7 +175,7 @@ namespace AuxiliumSoftware.AuxiliumServices.BackgroundTaskRunner.BackgroundServi
             var templateRenderer = scope.ServiceProvider.GetRequiredService<IEmailTemplateRenderer>();
             var emailService = scope.ServiceProvider.GetRequiredService<IEmailService>();
 
-            var targetUser = await db.Users
+            var targetUser = await db.WithinTenancy_Users
                 .AsNoTracking()
                 .FirstOrDefaultAsync(u => u.Id == message.TargetUserId, cancellationToken);
 
@@ -204,7 +204,7 @@ namespace AuxiliumSoftware.AuxiliumServices.BackgroundTaskRunner.BackgroundServi
 
             db.Add(new LogSystemMessageQueueSentEmailEntityModel
             {
-                Id = UUIDUtilities.GenerateV5(Common.Enumerators.DatabaseObjectTypeEnum.Log_SystemMessageQueue_EmailSent_EventEntry),
+                Id = UUIDUtilities.GenerateV5(Common.Enumerators.DatabaseObjectTypeEnum.WithinTenancy_Log_SystemMessageQueue_EmailSent_EventEntry),
                 CreatedAtUtc = DateTime.UtcNow,
 
                 MessageId = message.MessageId,
@@ -248,7 +248,7 @@ namespace AuxiliumSoftware.AuxiliumServices.BackgroundTaskRunner.BackgroundServi
 
                 db.Add(new LogSystemMessageQueueFailedActionEntityModel
                 {
-                    Id = UUIDUtilities.GenerateV5(Common.Enumerators.DatabaseObjectTypeEnum.Log_SystemMessageQueue_FailedAction_EventEntry),
+                    Id = UUIDUtilities.GenerateV5(Common.Enumerators.DatabaseObjectTypeEnum.WithinTenancy_Log_SystemMessageQueue_FailedAction_EventEntry),
                     CreatedAtUtc = DateTime.UtcNow,
 
                     MessageId = messageId,
